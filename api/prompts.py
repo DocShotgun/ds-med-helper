@@ -28,7 +28,7 @@ NOTE TEMPLATE:
 ---
 {context_section}
 
-Respond only with the complete note adhering to the NOTE TEMPLATE.
+Respond only with the complete note adhering to the NOTE TEMPLATE. Do not provide chain of thought.
 """
 
 
@@ -61,5 +61,5 @@ INSTRUCTIONS FOR EDIT:
 {instructions}
 ---
 
-Respond only with the complete edited note adhering to the NOTE TEMPLATE.
+Respond only with the complete edited note adhering to the NOTE TEMPLATE. Do not provide chain of thought.
 """

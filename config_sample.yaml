@@ -5,8 +5,7 @@ llm:
   model: google/medgemma-27b-text-it
   system_prompt: You are a medical documentation assistant. Create accurate, professional
     clinical notes based on the provided information. Do not embellish with historical
-    information that is not present in the input. Use proper medical terminology,
-    follow standard clinical documentation format, and be concise but complete.
+    information that is not present in the input. Be concise but complete.
   temperature: 0.8
   top_k: 40
   top_p: 0.95
