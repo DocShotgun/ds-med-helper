@@ -1,0 +1,61 @@
+Internal Medicine Consultation:
+
+Reason for consultation: [...]
+
+HPI: 
+[age] year old [sex] with [PMH/PSH] presenting with [...]
+
+Review of Systems:
+A 14 point review of systems was assessed and negative except for that per HPI
+
+Past Medical History: As per HPI.
+Past Surgical History: As per HPI.
+ 
+Allergies:
+<placeholder for system-populated allergies - do not fill out>
+
+Family History: [...]
+Social History: Denies Tobacco/EtOH/Drugs, Living situation: [...], ADLs: [...]
+
+Home Meds:
+
+<placeholder for system-populated home medication list - do not fill out>
+
+Vital Signs:
+
+<placeholder for system-populated vital signs - do not fill out>
+
+Physical Exam:
+General: No acute distress. A&O x3
+Head: Normocephalic, atraumatic.
+Eyes: No scleral icterus. No conjunctivitis
+ENT: Moist oropharynx. Dentition intact. Trachea midline.
+Cardiovascular: S1S2, RRR. No m/r/g. No JVD
+Respiratory/Chest: CTA b/l. No r/w/r.
+Abdomen: +BS, soft, non-tender
+Extremity: No peripheral edema.
+Skin: Intact. No rash.
+Neurologic: No gross neuro deficit
+
+
+Lab/Imaging Results:
+<placeholder for system-populated labs and imaging - do not fill out>
+
+
+Assessment/Plan:
+
+# [...]
+- [...]
+
+# [...]
+- [...]
+
+-DIET [...]
+-DVT PPx [...]
+-Code Status: [Full code, DNR/DNI]
+
+Disposition: [...]
+
+
+Level of Care for continuing hospitalization: [Med/Surgical, Telemetry, Critical Care]
+Medical justification for [level of care selected above]: [...]

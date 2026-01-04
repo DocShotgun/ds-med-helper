@@ -1,0 +1,65 @@
+PATIENT DISCHARGE SUMMARY:
+
+Admission Date: [...]
+Discharge Date: [...]
+
+DISCHARGED DIAGNOSES:
+# [...]
+# [...]
+
+HOSPITAL SUMMARY COURSE:
+[age] year old [sex] with [PMH/PSH] presenting with [...]
+
+[X] The patient was admitted due to a significant illness that required immediate inpatient care to protect life, prevent serious disability, or avoid death. The patient's condition was severe and could not be safely managed outside of a hospital setting. Admission was necessary to provide the level of care needed to stabilize the patient and prevent further deterioration.
+
+Total Discharge Planning Time: More than 30 Minutes
+
+CONSULTING PHYSICIANS:
+[...]
+
+PHYSICAL EXAM ON DISCHARGE:
+General: No acute distress. A&O x3
+Head: Normocephalic, atraumatic.
+Eyes: No scleral icterus. No conjunctivitis
+ENT: Moist oropharynx. Dentition intact. Trachea midline.
+Cardiovascular: S1S2, RRR. No m/r/g. No JVD
+Respiratory/Chest: CTA b/l. No r/w/r.
+Abdomen: +BS, soft, non-tender
+Extremity: No peripheral edema.
+Skin: Intact. No rash.
+Neurologic: No gross neuro deficit
+
+Condition on discharge: Stable
+Discharge disposition: [Home, Home w/ Home Health, SNF, Acute Rehab, LTACH, Other Acute Hospital]
+
+PERTINENT IMAGING / LABS:
+<placeholder for system-populated labs and imaging - do not fill out>
+
+DISCHARGE MEDICATIONS LIST:
+<placeholder for system-populated discharge medication list - do not fill out>
+ 
+RECOMMENDED DIET: [...]
+LIQUID CONSISTENCY: [...]
+
+FOLLOW UP: 
+With your primary care doctor in 1-2 weeks.
+With [...] in [...] weeks.
+
+Please Fax DC summary to: 
+PCP [X] Specialist [  ]
+
+Patient Instructions:
+Discharge Instructions:
+WARNING SIGNS:
+
+If you think you are experiencing a medical emergency, call 911 immediately or seek other emergency services.  Examples of symptoms that may be an emergency include:
+
+-You have severe trouble breathing.
+-You cough up pink foamy mucus and you have trouble breathing.
+-You have chest pain or pressure.  This may occur with:
+-Sweating.
+-Shortness of breath.
+-Nausea or vomiting.
+-Pain that spreads from the chest to the neck, jaw, or one or both shoulders are arms.
+-Dizziness or lightheadedness.
+-A fast or uneven pulse.

@@ -1,0 +1,65 @@
+"""Prompt Formatting Functions"""
+
+
+def format_note_writing_prompt(transcript: str, template_prompt: str, context: str = "") -> str:
+    """
+    Format prompt for writing a new clinical note from transcript.
+    
+    Args:
+        transcript: Audio transcription text
+        template_prompt: Template instructions
+        context: Additional context/instructions (optional)
+    
+    Returns:
+        Formatted prompt for note writing
+    """
+    context_section = f"\n\nADDITIONAL CONTEXT/INSTRUCTIONS:\n---\n{context}\n---" if context.strip() else ""
+    
+    return f"""Based on the following transcript, create a clinical note:
+
+TRANSCRIPT:
+---
+{transcript}
+---
+
+NOTE TEMPLATE:
+---
+{template_prompt}
+---
+{context_section}
+
+Provide the complete note following the NOTE TEMPLATE.
+"""
+
+
+def format_note_edit_prompt(original_note: str, instructions: str, template_prompt: str) -> str:
+    """
+    Format prompt for editing/revising an existing clinical note.
+    
+    Args:
+        original_note: The original clinical note
+        instructions: Edit instructions
+        template_prompt: Template instructions
+    
+    Returns:
+        Formatted prompt for note editing
+    """
+    return f"""Edit the following clinical note according to these instructions:
+
+ORIGINAL NOTE:
+---
+{original_note}
+---
+
+NOTE TEMPLATE:
+---
+{template_prompt}
+---
+
+INSTRUCTIONS FOR EDIT:
+---
+{instructions}
+---
+
+Provide the complete edited note following the NOTE TEMPLATE.
+"""

@@ -1,0 +1,73 @@
+History and Physical:
+
+
+Chief Complaint: [...]
+
+HPI:
+[age] year old [sex] with [PMH/PSH] presenting with [...]
+
+Review of Systems:
+A 14 point review of systems was assessed and negative except for that per HPI 
+
+Past Medical History: As per HPI.
+Past Surgical History: As per HPI.
+
+Allergies:
+<placeholder for system-populated allergies - do not fill out>
+
+Family History: [...]
+Social History: Denies Tobacco/EtOH/Drugs, Living situation: [...], ADLs: [...]
+Code Status (Full Code/DNR/Refer to POLST form): [Full code, DNR/DNI]
+
+Home Meds:
+
+<placeholder for system-populated home medication list - do not fill out>
+
+Vital Signs:
+
+<placeholder for system-populated vital signs - do not fill out>
+
+Physical Exam:
+General: No acute distress. A&O x3
+Head: Normocephalic, atraumatic.
+Eyes: No scleral icterus. No conjunctivitis
+ENT: Moist oropharynx. Dentition intact. Trachea midline.
+Cardiovascular: S1S2, RRR. No m/r/g. No JVD
+Respiratory/Chest: CTA b/l. No r/w/r.
+Abdomen: +BS, soft, non-tender
+Extremity: No peripheral edema.
+Skin: Intact. No rash.
+Neurologic: No gross neuro deficit
+
+
+Lab/Imaging Results:
+<placeholder for system-populated labs and imaging - do not fill out>
+
+EKG Interpretation: [...]
+
+
+Assessment/Plan:
+
+# [...]
+- [...]
+
+# [...]
+- [...]
+
+-DIET [...]
+-DVT PPx [...]
+-Code Status: [Full code, DNR/DNI]
+
+History & Exam: [Expanded Problem Focused, Detailed, Comprehensive]
+​​​MDM: [Straight Forward or Low, Moderate, High]
+Severity of Condition: [Low, Moderate, High]
+Time: [30 minutes, 50 minutes, 70 minutes] (with more than 50% time spent Face-to-Face counseling/coordinating care for the patient)
+
+
+Level of Care for continuing hospitalization: [Med/Surgical, Telemetry, Critical Care]
+Medical justification for [level of care selected above]: [...]
+
+
+CERTIFICATION:
+
+As the admitting physician responsible for the patient’s care, I certify that this patient requires inpatient hospital services to protect life, prevent serious disability, or avoid death. The patient’s  condition was severe and could not be safely managed outside of a hospital setting. Admission  was necessary to provide the level of care needed to stabilize the patient and prevent further  deterioration. It is my reasonable expectation, based on the patient's current medical condition  and the necessary plan of care, that this patient will require hospital care spanning at least two midnights.​

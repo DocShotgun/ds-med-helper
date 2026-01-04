@@ -1,0 +1,54 @@
+Internal Medicine Progress Note
+
+Interval History:
+[...]
+
+Vital Signs:
+​​​​​​
+<placeholder for system-populated vital signs - do not fill out>
+
+Ordered Meds List:
+
+<placeholder for system-populated current medication list - do not fill out>
+
+Physical Exam:
+General: No acute distress. A&O x3
+Head: Normocephalic, atraumatic.
+Eyes: No scleral icterus. No conjunctivitis
+ENT: Moist oropharynx. Dentition intact. Trachea midline.
+Cardiovascular: S1S2, RRR. No m/r/g. No JVD
+Respiratory/Chest: CTA b/l. No r/w/r.
+Abdomen: +BS, soft, non-tender
+Extremity: No peripheral edema.
+Skin: Intact. No rash.
+Neurologic: No gross neuro deficit
+
+
+Lab/Imaging Results:
+<placeholder for system-populated labs and imaging - do not fill out>
+
+
+Assessment/Plan:
+
+# [...]
+- [...]
+
+# [...]
+- [...]
+
+-DIET [...]
+-DVT PPx [...]
+-Code Status: [Full code, DNR/DNI]
+
+Disposition: [...]
+History & Exam: [Problem Focused, Expanded Problem Focused, Detailed]
+​​​MDM: [Straight Forward or Low, Moderate, High]
+Severity of Condition: [Low, Moderate, High]
+Time: [15 minutes, 25 minutes, 35 minutes] (with more than 50% time spent Face-to-Face counseling/coordinating care for the patient)
+
+
+Level of Care for continuing hospitalization: [Med/Surgical, Telemetry, Critical Care]
+Medical justification for [level of care selected above]: [...]
+
+
+[X] The patient was admitted due to a significant illness that required immediate inpatient care to protect life, prevent serious disability, or avoid death. The patient's condition was severe and could not be safely managed outside of a hospital setting. Admission was necessary to provide the level of care needed to stabilize the patient and prevent further deterioration.

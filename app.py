@@ -1,0 +1,54 @@
+"""
+DS Med Helper - Medical Documentation Assistant
+A Streamlit-based web UI for physician documentation assistance.
+
+Features:
+- Scribe Mode: Record conversations/dictations and generate clinical notes
+- Note Edit Mode: Edit and revise physician notes with AI assistance
+"""
+
+from core import load_config
+from ui import render_scribe_mode, render_edit_mode, render_settings, render_session_history
+
+
+def main():
+    """Main application entry point"""
+    # Load configuration
+    config = load_config()
+    
+    import streamlit as st
+    st.set_page_config(
+        page_title="DS Med Helper - Medical Documentation",
+        page_icon="🏥",
+        layout="wide",
+        initial_sidebar_state="expanded"
+    )
+    
+    # Main content
+    st.title("🏥 DS Med Helper")
+    st.markdown("Medical Documentation Assistant")
+    
+    # Navigation tabs (sticky)
+    tab1, tab2, tab3, tab4 = st.tabs(["📝 Scribe", "✏️ Edit", "📚 History", "⚙️ Settings"])
+    
+    with tab1:
+        render_scribe_mode(config)
+    
+    with tab2:
+        render_edit_mode(config)
+    
+    with tab3:
+        render_session_history()
+    
+    with tab4:
+        render_settings(config)
+    
+    # Footer
+    st.markdown("---")
+    st.markdown(
+        "*DS Med Helper - Copyright © 2026 Doctor Shotgun*"
+    )
+
+
+if __name__ == "__main__":
+    main()
