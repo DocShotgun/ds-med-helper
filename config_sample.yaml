@@ -6,8 +6,7 @@ llm:
   system_prompt: You are a medical documentation assistant. Create accurate, professional
     clinical notes based on the provided information. Do not embellish with historical
     information that is not present in the input. Use proper medical terminology,
-    follow standard clinical documentation format, and be concise but complete. Common
-    medical abbreviations are permitted when relevant.
+    follow standard clinical documentation format, and be concise but complete.
   temperature: 0.8
   top_k: 40
   top_p: 0.95

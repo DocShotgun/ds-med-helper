@@ -28,7 +28,7 @@ NOTE TEMPLATE:
 ---
 {context_section}
 
-Provide the complete note following the NOTE TEMPLATE.
+Respond only with the complete note adhering to the NOTE TEMPLATE.
 """
 
 
@@ -61,5 +61,5 @@ INSTRUCTIONS FOR EDIT:
 {instructions}
 ---
 
-Provide the complete edited note following the NOTE TEMPLATE.
+Respond only with the complete edited note adhering to the NOTE TEMPLATE.
 """
