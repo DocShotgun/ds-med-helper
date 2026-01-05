@@ -7,6 +7,8 @@ DISCHARGED DIAGNOSES:
 # [...]
 # [...]
 
+<list acute inpatient conditions first, followed by chronic conditions>
+
 HOSPITAL SUMMARY COURSE:
 [age] year old [sex] with [PMH/PSH] presenting with [...]
 

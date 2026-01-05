@@ -36,6 +36,8 @@ Assessment/Plan:
 # [...]
 - [...]
 
+<list acute inpatient conditions first, followed by chronic conditions>
+
 -DIET [...]
 -DVT PPx [...]
 -Code Status: [Full code, DNR/DNI]

@@ -15,7 +15,7 @@ def format_note_writing_prompt(transcript: str, template_prompt: str, context: s
     """
     context_section = f"\n\nADDITIONAL CONTEXT/INSTRUCTIONS:\n---\n{context}\n---" if context.strip() else ""
     
-    return f"""Based on the following transcript, create a clinical note:
+    return f"""Based on the following transcript, create a clinical note, correcting for any transcription errors:
 
 TRANSCRIPT:
 ---
