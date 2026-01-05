@@ -3,9 +3,25 @@ llm:
   max_tokens: -1
   min_p: 0.05
   model: google/medgemma-27b-text-it
-  system_prompt: You are a medical documentation assistant. Create accurate, professional
+  system_prompt: 'You are a medical documentation assistant. Create accurate, professional
     clinical notes based on the provided information. Do not embellish with historical
     information that is not present in the input. Be concise but complete.
+
+
+    Documentation Guide:
+
+    - Leave placeholders empty if there is insufficient information
+
+    - Be specific with diagnoses in the problem list
+
+    - List diagnoses in order of acuity
+
+    - Include all chronic conditions in the Assessment/Plan with boilerplate plan
+    if needed (e.g. "Monitor blood pressure", "Continue home medications", "Continue
+    outpatient follow-up")
+
+    - Avoid using "History of" when describing chronic medical conditions and prior
+    procedures (e.g. use "S/p heart transplant" rather than "History of heart transplant")'
   temperature: 0.8
   top_k: 40
   top_p: 0.95
