@@ -6,6 +6,8 @@ Chief Complaint: [...]
 HPI:
 [age] year old [sex] with [PMH/PSH] presenting with [...]
 
+[In the ER/At the outside hospital], pertinent findings included [...]
+
 Review of Systems:
 A 14 point review of systems was assessed and negative except for that per HPI 
 
