@@ -48,7 +48,13 @@ def create_session() -> Dict[str, Any]:
         "scribe_context": "",
         "edit_original": "",
         "edit_instructions": "",
-        "edit_result": ""
+        "edit_result": "",
+        "synthesize_instructions": "",
+        "synthesize_hp": "",
+        "synthesize_consults": "",
+        "synthesize_studies": "",
+        "synthesize_progress": "",
+        "synthesize_result": ""
     }
     
     data["sessions"].insert(0, session)

@@ -63,3 +63,63 @@ INSTRUCTIONS FOR EDIT:
 
 Respond only with the complete edited note in plain text, adhering to the NOTE TEMPLATE. Do not provide chain of thought.
 """
+
+
+def format_note_synthesis_prompt(
+    instructions: str,
+    template_prompt: str,
+    hp: str = "",
+    consults: str = "",
+    studies: str = "",
+    progress: str = ""
+) -> str:
+    """
+    Format prompt for synthesizing information from multiple sources into a clinical note.
+    
+    Args:
+        instructions: Synthesis instructions
+        hp: History and Physical information (optional)
+        consults: Consult note(s) information (optional)
+        studies: Studies and procedures information (optional)
+        progress: Progress note(s) information (optional)
+        template_prompt: Template instructions
+    
+    Returns:
+        Formatted prompt for note synthesis
+    """
+    # Build the synthesis input section
+    synthesis_parts = []
+    
+    if hp.strip():
+        synthesis_parts.append(f"<HISTORY_AND_PHYSICAL>\n{hp}\n</HISTORY_AND_PHYSICAL>")
+    
+    if consults.strip():
+        synthesis_parts.append(f"<CONSULT_NOTES>\n{consults}\n</CONSULT_NOTES>")
+    
+    if studies.strip():
+        synthesis_parts.append(f"<STUDIES_AND_PROCEDURES>\n{studies}\n</STUDIES_AND_PROCEDURES>")
+    
+    if progress.strip():
+        synthesis_parts.append(f"<PROGRESS_NOTES>\n{progress}\n</PROGRESS_NOTES>")
+    
+    synthesis_section = "\n".join(synthesis_parts)
+    
+    return f"""Synthesize the following information into a clinical note:
+
+SOURCE INFORMATION:
+---
+{synthesis_section}
+---
+
+NOTE TEMPLATE:
+---
+{template_prompt}
+---
+
+INSTRUCTIONS FOR SYNTHESIS:
+---
+{instructions}
+---
+
+Respond only with the complete synthesized note in plain text, adhering to the NOTE TEMPLATE. Do not provide chain of thought.
+"""

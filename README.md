@@ -6,6 +6,7 @@ A Streamlit-based web UI for physician medical documentation assistance using Op
 
 - **Scribe Mode**: Record patient encounters or dictations and generate clinical notes automatically
 - **Note Edit Mode**: Edit physician notes with AI assistance
+- **Synthesize Mode**: Combine information from multiple sources (H&P, Consults, Studies, Progress Notes) to write comprehensive notes
 - **Session Persistence**: Sessions are saved automatically and can be restored
 - **Configurable Endpoints**: Connect to your custom OpenAI API compatible LLM and ASR endpoints
 - **Template System**: Customizable note templates (H&P, Progress Note, Consultation, Discharge Summary)
@@ -97,6 +98,16 @@ Note templates are stored as `.txt` files in the `templates/` folder. Edit these
 2. Optionally select a template for context
 3. Enter revision instructions (e.g., "Summarize to 3 bullet points")
 4. Click "Generate Edited Note"
+
+### Synthesize Mode
+1. Enter synthesis instructions (optional)
+2. Fill in source information fields:
+   - History and Physical
+   - Consult Note(s)
+   - Studies and Procedures
+   - Progress Note(s)
+3. Select a note template
+4. Click "Generate Synthesized Note" to create a comprehensive clinical note from multiple sources
 
 ### Settings
 - Configure endpoints for LLM and STT servers
