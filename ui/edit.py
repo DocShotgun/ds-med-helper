@@ -48,15 +48,7 @@ def render_edit_mode(config: dict) -> None:
             on_change=save_original_note
         )
     
-    with col2:
-        # Template selection
-        selected_template_name = st.selectbox(
-            "Select note template",
-            options=list(template_options.keys()),
-            index=0,
-            key="edit_template"
-        )
-        
+    with col2:        
         st.subheader("Edit Instructions")
         
         # Auto-save instructions
@@ -69,6 +61,14 @@ def render_edit_mode(config: dict) -> None:
             placeholder="e.g., 'Make the HPI more concise' or 'Clean up the Assessment/Plan formatting'",
             key="edit_instr",
             on_change=save_instructions
+        )
+
+        # Template selection
+        selected_template_name = st.selectbox(
+            "Select note template",
+            options=list(template_options.keys()),
+            index=0,
+            key="edit_template"
         )
         
         if st.button("Generate Edited Note", type="primary", key="generate_edit_btn"):
