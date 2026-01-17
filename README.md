@@ -116,10 +116,10 @@ Note templates are stored as `.txt` files in the `templates/` folder. Edit these
 - View, create, or clear sessions
 
 ### Session Management
-- Each browser maintains its own selected session
+- Each browser maintains its own selected session via URL parameters (`?session_id=xxx`)
 - Use the session picker dropdown at the top to switch between sessions
+- Bookmark the URL to return to your active session after closing the browser
 - "New Session" button creates a fresh session for the current browser
-- Sessions are shared across all users but each user works on their own selected session
 - Session history shows all sessions with ability to switch or delete
 
 ## Access
