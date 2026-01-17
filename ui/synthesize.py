@@ -3,18 +3,18 @@
 import streamlit as st
 
 from api import llm_stream_to_list, format_note_synthesis_prompt, run_async
-from core import load_templates, get_fallback_templates, get_current_session, create_session, update_session
+from core import load_templates, get_fallback_templates, update_session
 
 
-def render_synthesize_mode(config: dict) -> None:
-    """Render the Synthesize Mode interface"""
+def render_synthesize_mode(config: dict, session: dict) -> None:
+    """Render the Synthesize Mode interface
+    
+    Args:
+        config: Application configuration
+        session: The currently selected session dict
+    """
     st.header("📋 Synthesize Mode")
     st.markdown("Combine information from multiple sources to write a comprehensive clinical note.")
-    
-    # Session tracking
-    session = get_current_session()
-    if not session:
-        session = create_session()
     
     # Initialize session state from persistent storage BEFORE creating widgets
     if 'synthesize_instructions' not in st.session_state:

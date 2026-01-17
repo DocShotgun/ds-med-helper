@@ -2,7 +2,7 @@
 
 import streamlit as st
 
-from core import load_config, save_config, get_current_session, create_session, load_session_data, save_session_data
+from core import load_config, save_config, create_session, load_session_data, save_session_data, get_all_sessions, get_session_by_id
 
 
 def render_settings(config: dict) -> None:
@@ -71,8 +71,17 @@ def render_settings(config: dict) -> None:
         st.success("Settings saved! Restart the app to apply changes.")
     
     with st.expander("Session Management", expanded=False):
+        # Initialize session state if not set
+        if 'selected_session_id' not in st.session_state:
+            sessions = get_all_sessions()
+            if sessions:
+                st.session_state['selected_session_id'] = sessions[0]['id']
+            else:
+                new_session = create_session()
+                st.session_state['selected_session_id'] = new_session['id']
+        
         st.markdown("**Current Session Data**")
-        session = get_current_session()
+        session = get_session_by_id(st.session_state.get('selected_session_id', ''))
         if session:
             st.json(session)
         else:
@@ -83,13 +92,14 @@ def render_settings(config: dict) -> None:
         with col1:
             if st.button("Create New Session"):
                 new_session = create_session()
+                st.session_state['selected_session_id'] = new_session['id']
                 st.success(f"Created new session: {new_session['id']}")
                 st.rerun()
         
         with col2:
             if st.button("Clear All Sessions", type="primary"):
-                data = {"sessions": [], "current_session": None}
-                save_session_data(data)
+                save_session_data({"sessions": []})
                 new_session = create_session()
+                st.session_state['selected_session_id'] = new_session['id']
                 st.success("All sessions cleared. Created new session.")
                 st.rerun()

@@ -115,6 +115,13 @@ Note templates are stored as `.txt` files in the `templates/` folder. Edit these
 - Adjust sampling parameters (temperature, top_k, top_p, min_p)
 - View, create, or clear sessions
 
+### Session Management
+- Each browser maintains its own selected session
+- Use the session picker dropdown at the top to switch between sessions
+- "New Session" button creates a fresh session for the current browser
+- Sessions are shared across all users but each user works on their own selected session
+- Session history shows all sessions with ability to switch or delete
+
 ## Access
 
 When running on your home server:

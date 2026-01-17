@@ -4,7 +4,7 @@ import json
 import os
 import uuid
 from datetime import datetime
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List
 
 from .config import load_config
 
@@ -20,7 +20,7 @@ def load_session_data() -> Dict[str, Any]:
                 return json.load(f)
         except:
             pass
-    return {"sessions": [], "current_session": None}
+    return {"sessions": []}
 
 
 def save_session_data(data: Dict[str, Any]) -> None:
@@ -42,7 +42,7 @@ def create_session() -> Dict[str, Any]:
     
     session = {
         "id": str(uuid.uuid4())[:8],
-        "created_at": datetime.now().isoformat(),
+        "updated_at": datetime.now().isoformat(),
         "scribe_transcript": "",
         "scribe_note": "",
         "scribe_context": "",
@@ -59,19 +59,25 @@ def create_session() -> Dict[str, Any]:
     
     data["sessions"].insert(0, session)
     data["sessions"] = data["sessions"][:max_history]
-    data["current_session"] = session["id"]
     
     save_session_data(data)
     return session
 
 
-def get_current_session() -> Optional[Dict[str, Any]]:
-    """Get the current active session"""
+def get_all_sessions() -> List[Dict[str, Any]]:
+    """Get all sessions, sorted by updated date (newest first)"""
     data = load_session_data()
-    current_id = data.get("current_session")
+    sessions = data.get("sessions", [])
+    # Sort by updated_at descending (newest first)
+    return sorted(sessions, key=lambda x: x.get('updated_at', ''), reverse=True)
+
+
+def get_session_by_id(session_id: str) -> Optional[Dict[str, Any]]:
+    """Get a specific session by ID"""
+    data = load_session_data()
     
     for session in data.get("sessions", []):
-        if session["id"] == current_id:
+        if session["id"] == session_id:
             return session
     return None
 
@@ -93,6 +99,4 @@ def delete_session(session_id: str) -> None:
     """Delete a session"""
     data = load_session_data()
     data["sessions"] = [s for s in data.get("sessions", []) if s["id"] != session_id]
-    if data.get("current_session") == session_id:
-        data["current_session"] = data["sessions"][0]["id"] if data["sessions"] else None
     save_session_data(data)
