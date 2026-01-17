@@ -19,7 +19,7 @@ def main():
     
     import streamlit as st
     st.set_page_config(
-        page_title="DS Med Helper - Medical Documentation",
+        page_title="DS Med Helper",
         page_icon="🏥",
         layout="wide",
         initial_sidebar_state="expanded"
@@ -27,7 +27,6 @@ def main():
     
     # Main content
     st.title("🏥 DS Med Helper")
-    st.markdown("Medical Documentation Assistant")
     
     # Session picker
     session = render_session_picker()
@@ -53,7 +52,7 @@ def main():
     # Footer
     st.markdown("---")
     st.markdown(
-        "*DS Med Helper - Copyright © 2026 Doctor Shotgun*"
+        "*Copyright © 2026 Doctor Shotgun*"
     )
 
 
