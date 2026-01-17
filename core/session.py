@@ -1,4 +1,10 @@
-"""Session Management Functions"""
+"""Session Management Functions
+
+Uses individual session files for better concurrency:
+- Each session stored as sessions/s_<id>.json
+- No shared index file - scan folder for session list
+- Safe for multiple users working on different sessions
+"""
 
 import json
 import os
@@ -6,43 +12,22 @@ import uuid
 from datetime import datetime
 from typing import Optional, Dict, Any, List
 
-from .config import load_config
+# Folder for session files
+SESSIONS_FOLDER = 'sessions'
 
 
-def load_session_data() -> Dict[str, Any]:
-    """Load session data from persistent storage"""
-    config = load_config()
-    storage_file = config.get('session', {}).get('storage_file', 'sessions/session_data.json')
-    
-    if os.path.exists(storage_file):
-        try:
-            with open(storage_file, 'r') as f:
-                return json.load(f)
-        except:
-            pass
-    return {"sessions": []}
-
-
-def save_session_data(data: Dict[str, Any]) -> None:
-    """Save session data to persistent storage"""
-    config = load_config()
-    storage_file = config.get('session', {}).get('storage_file', 'sessions/session_data.json')
-    
-    # Ensure directory exists
-    os.makedirs(os.path.dirname(storage_file), exist_ok=True)
-    
-    with open(storage_file, 'w') as f:
-        json.dump(data, f, indent=2)
+def _get_session_file(session_id: str) -> str:
+    """Get the file path for a session"""
+    return os.path.join(SESSIONS_FOLDER, f"s_{session_id}.json")
 
 
 def create_session() -> Dict[str, Any]:
     """Create a new session"""
-    data = load_session_data()
-    max_history = data.get('max_history', 100)
+    session_id = str(uuid.uuid4())[:8]
+    now = datetime.now().isoformat()
     
     session = {
-        "id": str(uuid.uuid4())[:8],
-        "updated_at": datetime.now().isoformat(),
+        "updated_at": now,
         "scribe_transcript": "",
         "scribe_note": "",
         "scribe_context": "",
@@ -57,46 +42,89 @@ def create_session() -> Dict[str, Any]:
         "synthesize_result": ""
     }
     
-    data["sessions"].insert(0, session)
-    data["sessions"] = data["sessions"][:max_history]
+    # Ensure directory exists
+    os.makedirs(SESSIONS_FOLDER, exist_ok=True)
     
-    save_session_data(data)
+    # Save individual session file
+    session_file = _get_session_file(session_id)
+    with open(session_file, 'w') as f:
+        json.dump(session, f, indent=2)
+    
+    # Return session with ID for convenience
+    session['id'] = session_id
     return session
 
 
 def get_all_sessions() -> List[Dict[str, Any]]:
-    """Get all sessions, sorted by updated date (newest first)"""
-    data = load_session_data()
-    sessions = data.get("sessions", [])
+    """Get all sessions by scanning folder, sorted by updated date (newest first)"""
+    os.makedirs(SESSIONS_FOLDER, exist_ok=True)
+    
+    sessions = []
+    
+    # Scan folder for session files
+    for filename in os.listdir(SESSIONS_FOLDER):
+        if filename.startswith('s_') and filename.endswith('.json'):
+            session_id = filename[2:-5]  # Remove 's_' prefix and '.json' suffix
+            session_file = _get_session_file(session_id)
+            
+            try:
+                with open(session_file, 'r') as f:
+                    session = json.load(f)
+                    # Add id from filename for convenience
+                    session['id'] = session_id
+                    sessions.append(session)
+            except:
+                pass
+    
     # Sort by updated_at descending (newest first)
     return sorted(sessions, key=lambda x: x.get('updated_at', ''), reverse=True)
 
 
 def get_session_by_id(session_id: str) -> Optional[Dict[str, Any]]:
     """Get a specific session by ID"""
-    data = load_session_data()
+    session_file = _get_session_file(session_id)
     
-    for session in data.get("sessions", []):
-        if session["id"] == session_id:
-            return session
+    if os.path.exists(session_file):
+        try:
+            with open(session_file, 'r') as f:
+                session = json.load(f)
+                session['id'] = session_id
+                return session
+        except:
+            pass
     return None
 
 
 def update_session(session_id: str, updates: Dict[str, Any]) -> None:
     """Update session data"""
-    data = load_session_data()
+    session_file = _get_session_file(session_id)
+    now = datetime.now().isoformat()
     
-    for session in data.get("sessions", []):
-        if session["id"] == session_id:
-            session.update(updates)
-            session["updated_at"] = datetime.now().isoformat()
-            break
+    # Load existing session
+    if os.path.exists(session_file):
+        try:
+            with open(session_file, 'r') as f:
+                session = json.load(f)
+        except:
+            return
+    else:
+        return
     
-    save_session_data(data)
+    # Apply updates
+    session.update(updates)
+    session['updated_at'] = now
+    
+    # Save session file
+    with open(session_file, 'w') as f:
+        json.dump(session, f, indent=2)
 
 
 def delete_session(session_id: str) -> None:
-    """Delete a session"""
-    data = load_session_data()
-    data["sessions"] = [s for s in data.get("sessions", []) if s["id"] != session_id]
-    save_session_data(data)
+    """Delete a session file"""
+    session_file = _get_session_file(session_id)
+    
+    if os.path.exists(session_file):
+        try:
+            os.remove(session_file)
+        except:
+            pass

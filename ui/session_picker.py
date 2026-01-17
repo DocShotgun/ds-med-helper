@@ -55,10 +55,11 @@ def render_session_picker() -> dict:
     Returns:
         The currently selected session dict
     """
-    sessions = get_all_sessions()
-    
-    # Initialize session state (sets URL params)
+    # Initialize session state FIRST (may create session)
     init_session_state()
+    
+    # Get sessions AFTER init (so we have the latest)
+    sessions = get_all_sessions()
     
     col1, col2 = st.columns([3, 1])
     

@@ -2,12 +2,13 @@
 
 import streamlit as st
 
-from core import load_config, save_config, create_session, load_session_data, save_session_data, get_all_sessions, get_session_by_id
+from core import save_config
 
 
 def render_settings(config: dict) -> None:
     """Render settings page"""
     st.header("⚙️ Settings")
+    st.markdown("Configure app settings and endpoints")
     
     with st.expander("Server Configuration", expanded=True):
         server_config = config.get('server', {})
@@ -54,52 +55,25 @@ def render_settings(config: dict) -> None:
             help="ASR model name"
         )
     
-    if st.button("Save Settings", type="primary"):
-        config['server'] = {'host': new_host, 'port': int(new_port)}
-        config['llm'] = {
-            'endpoint': new_llm_endpoint,
-            'model': new_model,
-            'system_prompt': new_system_prompt,
-            'max_tokens': int(new_max_tokens) if new_max_tokens > 0 else -1,
-            'temperature': new_temperature,
-            'top_k': new_top_k,
-            'top_p': new_top_p,
-            'min_p': new_min_p,
-        }
-        config['stt'] = {'endpoint': new_stt_endpoint, 'model': new_stt_model}
-        save_config(config)
-        st.success("Settings saved! Restart the app to apply changes.")
+    col_save, col_reload = st.columns([1, 1])
     
-    with st.expander("Session Management", expanded=False):
-        # Initialize session state if not set
-        if 'selected_session_id' not in st.session_state:
-            sessions = get_all_sessions()
-            if sessions:
-                st.session_state['selected_session_id'] = sessions[0]['id']
-            else:
-                new_session = create_session()
-                st.session_state['selected_session_id'] = new_session['id']
-        
-        st.markdown("**Current Session Data**")
-        session = get_session_by_id(st.session_state.get('selected_session_id', ''))
-        if session:
-            st.json(session)
-        else:
-            st.info("No active session")
-        
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            if st.button("Create New Session"):
-                new_session = create_session()
-                st.session_state['selected_session_id'] = new_session['id']
-                st.success(f"Created new session: {new_session['id']}")
-                st.rerun()
-        
-        with col2:
-            if st.button("Clear All Sessions", type="primary"):
-                save_session_data({"sessions": []})
-                new_session = create_session()
-                st.session_state['selected_session_id'] = new_session['id']
-                st.success("All sessions cleared. Created new session.")
-                st.rerun()
+    with col_save:
+        if st.button("💾 Save Settings", type="primary"):
+            config['server'] = {'host': new_host, 'port': int(new_port)}
+            config['llm'] = {
+                'endpoint': new_llm_endpoint,
+                'model': new_model,
+                'system_prompt': new_system_prompt,
+                'max_tokens': int(new_max_tokens) if new_max_tokens > 0 else -1,
+                'temperature': new_temperature,
+                'top_k': new_top_k,
+                'top_p': new_top_p,
+                'min_p': new_min_p,
+            }
+            config['stt'] = {'endpoint': new_stt_endpoint, 'model': new_stt_model}
+            save_config(config)
+            st.success("Settings saved! Restart the app to apply changes.")
+    
+    with col_reload:
+        if st.button("🔄 Reload Settings"):
+            st.rerun()

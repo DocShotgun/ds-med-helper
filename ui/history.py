@@ -2,13 +2,39 @@
 
 import streamlit as st
 
-from core import get_all_sessions, get_session_by_id, create_session, delete_session, update_session
+from core import get_all_sessions, create_session, delete_session
 
 
 def render_session_history() -> None:
     """Render session history viewer"""
     st.header("📚 Session History")
+    st.markdown("Manage sessions and view history")
     
+    # Session management buttons
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        if st.button("Create New Session", type="primary"):
+            new_session = create_session()
+            st.session_state['selected_session_id'] = new_session['id']
+            st.query_params['session_id'] = new_session['id']
+            st.success(f"Created new session: {new_session['id']}")
+            st.rerun()
+    
+    with col2:
+        if st.button("Clear All Sessions", type="primary"):
+            sessions = get_all_sessions()
+            for session in sessions:
+                delete_session(session['id'])
+            new_session = create_session()
+            st.session_state['selected_session_id'] = new_session['id']
+            st.query_params['session_id'] = new_session['id']
+            st.success("All sessions cleared. Created new session.")
+            st.rerun()
+    
+    st.divider()
+    
+    # Session list
     sessions = get_all_sessions()
     
     if not sessions:
@@ -25,6 +51,7 @@ def render_session_history() -> None:
             with col1:
                 if st.button(f"Switch to Session {session['id']}", key=f"load_{session['id']}"):
                     st.session_state['selected_session_id'] = session['id']
+                    st.query_params['session_id'] = session['id']
                     st.success(f"Switched to session {session['id']}")
                     st.rerun()
             
