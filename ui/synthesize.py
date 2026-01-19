@@ -67,7 +67,7 @@ def render_synthesize_mode(config: dict, session: dict) -> None:
     # Clear button at top
     col_clear, col_spacer = st.columns([1, 10])
     with col_clear:
-        if st.button("🗑️ Clear All", type="secondary", key="synthesize_clear_btn"):
+        if st.button("Clear All", type="secondary", key="synthesize_clear_btn", icon="🗑️"):
             st.session_state['synthesize_show_clear_confirm'] = True
             st.rerun()
     
@@ -147,7 +147,7 @@ def render_synthesize_mode(config: dict, session: dict) -> None:
         key="synthesize_template"
     )
     
-    if st.button("📝 Generate Synthesized Note", type="primary", key="generate_synthesize_btn"):
+    if st.button("Generate Synthesized Note", type="primary", key="generate_synthesize_btn", icon="📝"):
         instructions = st.session_state.get('synthesize_instructions', '')
         hp = st.session_state.get('synthesize_hp', '')
         consults = st.session_state.get('synthesize_consults', '')

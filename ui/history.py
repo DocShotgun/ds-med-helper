@@ -67,7 +67,7 @@ def render_session_history() -> None:
     col1, col2 = st.columns(2)
     
     with col1:
-        if st.button("📚 Create New Session", type="primary"):
+        if st.button("Create New Session", type="primary", icon="📚"):
             new_session = create_session()
             st.session_state['selected_session_id'] = new_session['id']
             st.query_params['session_id'] = new_session['id']
@@ -75,7 +75,7 @@ def render_session_history() -> None:
             st.rerun()
     
     with col2:
-        if st.button("🗑️ Clear All Sessions", type="secondary"):
+        if st.button("Clear All Sessions", type="secondary", icon="🗑️"):
             render_clear_all_confirmation()
     
     st.divider()
@@ -95,13 +95,13 @@ def render_session_history() -> None:
             col1, col2 = st.columns(2)
             
             with col1:
-                if st.button(f"🔄 Switch to Session {session['id']}", key=f"load_{session['id']}", type="primary"):
+                if st.button(f"Switch to Session {session['id']}", key=f"load_{session['id']}", type="primary", icon="🔄"):
                     st.session_state['selected_session_id'] = session['id']
                     st.query_params['session_id'] = session['id']
                     st.success(f"Switched to session {session['id']}")
                     st.rerun()
             
             with col2:
-                if st.button(f"🗑️ Delete Session {session['id']}", key=f"delete_{session['id']}", type="secondary"):
+                if st.button(f"Delete Session {session['id']}", key=f"delete_{session['id']}", type="secondary", icon="🗑️"):
                     st.session_state['confirm_delete_session_id'] = session['id']
                     st.rerun()

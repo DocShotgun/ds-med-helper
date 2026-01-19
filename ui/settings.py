@@ -60,7 +60,7 @@ def render_settings(config: dict) -> None:
     col_save, col_reload = st.columns([1, 1])
     
     with col_save:
-        if st.button("💾 Save Settings", type="primary"):
+        if st.button("Save Settings", type="primary", icon="💾"):
             config['server'] = {'host': new_host, 'port': int(new_port)}
             config['llm'] = {
                 'endpoint': new_llm_endpoint,
@@ -77,5 +77,5 @@ def render_settings(config: dict) -> None:
             st.success("Settings saved! Restart the app to apply changes.")
     
     with col_reload:
-        if st.button("🔄 Reload Settings"):
+        if st.button("Reload Settings", icon="🔄"):
             st.rerun()

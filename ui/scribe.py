@@ -58,7 +58,7 @@ def render_scribe_mode(config: dict, session: dict) -> None:
     # Clear button at top
     col_clear, col_spacer = st.columns([1, 10])
     with col_clear:
-        if st.button("🗑️ Clear All", type="secondary", key="scribe_clear_btn"):
+        if st.button("Clear All", type="secondary", key="scribe_clear_btn", icon="🗑️"):
             st.session_state['scribe_show_clear_confirm'] = True
             st.rerun()
     
@@ -83,14 +83,15 @@ def render_scribe_mode(config: dict, session: dict) -> None:
         col_download, col_clear_audio = st.columns([1, 5])
         with col_download:
             st.download_button(
-                "💾 Download Recording",
+                "Download Recording",
                 data=saved_audio,
                 file_name=f"recording_{session['id']}.wav",
                 mime="audio/wav",
-                key="scribe_download_audio"
+                key="scribe_download_audio",
+                icon="💾"
             )
         with col_clear_audio:
-            if st.button("🗑️ Clear Audio", key="scribe_clear_audio"):
+            if st.button("Clear Audio", key="scribe_clear_audio", icon="🗑️"):
                 st.session_state['scribe_audio_bytes'] = None
                 st.rerun()
     else:
@@ -120,7 +121,7 @@ def render_scribe_mode(config: dict, session: dict) -> None:
     
     if audio_bytes is not None:
         # Audio is already displayed above under Recording section
-        if st.button("📝 Transcribe Audio", type="primary", key="transcribe_btn"):
+        if st.button("Transcribe Audio", type="primary", key="transcribe_btn", icon="📝"):
             with st.spinner("Transcribing..."):
                 config_stt = config.get('stt', {})
                 transcript_result = run_async(asr_transcribe(
@@ -177,7 +178,7 @@ def render_scribe_mode(config: dict, session: dict) -> None:
         on_change=lambda: update_session(session['id'], {'scribe_template': selected_template_name})
     )
     
-    if st.button("📝 Generate Note", type="primary", key="generate_note_btn"):
+    if st.button("Generate Note", type="primary", key="generate_note_btn", icon="📝"):
         if transcript.strip():
             config_llm = config.get('llm', {})
             template = template_options[selected_template_name]

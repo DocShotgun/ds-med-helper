@@ -87,7 +87,7 @@ def render_session_picker() -> dict:
             selected_id = None
     
     with col2:
-        if st.button("📚 New Session", type="primary"):
+        if st.button("New Session", type="primary", icon="📚"):
             new_session = create_session()
             st.session_state['selected_session_id'] = new_session['id']
             # Update URL

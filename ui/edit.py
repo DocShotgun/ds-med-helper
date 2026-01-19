@@ -55,7 +55,7 @@ def render_edit_mode(config: dict, session: dict) -> None:
     # Clear button at top
     col_clear, col_spacer = st.columns([1, 10])
     with col_clear:
-        if st.button("🗑️ Clear All", type="secondary", key="edit_clear_btn"):
+        if st.button("Clear All", type="secondary", key="edit_clear_btn", icon="🗑️"):
             st.session_state['edit_show_clear_confirm'] = True
             st.rerun()
     
@@ -107,7 +107,7 @@ def render_edit_mode(config: dict, session: dict) -> None:
             key="edit_template"
         )
         
-        if st.button("📝 Generate Edited Note", type="primary", key="generate_edit_btn"):
+        if st.button("Generate Edited Note", type="primary", key="generate_edit_btn", icon="📝"):
             current_note = st.session_state.get('original_note_area', '')
             current_instr = st.session_state.get('edit_instr', '')
             
