@@ -29,6 +29,49 @@ def render_synthesize_mode(config: dict, session: dict) -> None:
         st.session_state['synthesize_progress'] = session.get('synthesize_progress', '')
     if 'synthesize_result' not in st.session_state:
         st.session_state['synthesize_result'] = session.get('synthesize_result', '')
+    if 'synthesize_show_clear_confirm' not in st.session_state:
+        st.session_state['synthesize_show_clear_confirm'] = False
+    
+    # Clear confirmation dialog
+    if st.session_state.get('synthesize_show_clear_confirm'):
+        @st.dialog("Clear Synthesize Fields?")
+        def confirm():
+            st.warning("Are you sure you want to clear all Synthesize fields? This cannot be undone.")
+            col_yes, col_no = st.columns(2)
+            with col_yes:
+                if st.button("Confirm", type="primary", key="synthesize_confirm_clear"):
+                    # Clear all synthesize fields in session state
+                    st.session_state['synthesize_instructions'] = ''
+                    st.session_state['synthesize_hp'] = ''
+                    st.session_state['synthesize_consults'] = ''
+                    st.session_state['synthesize_studies'] = ''
+                    st.session_state['synthesize_progress'] = ''
+                    st.session_state['synthesize_result'] = ''
+                    # Clear in persistent storage
+                    update_session(session['id'], {
+                        'synthesize_instructions': '',
+                        'synthesize_hp': '',
+                        'synthesize_consults': '',
+                        'synthesize_studies': '',
+                        'synthesize_progress': '',
+                        'synthesize_result': ''
+                    })
+                    st.session_state['synthesize_show_clear_confirm'] = False
+                    st.rerun()
+            with col_no:
+                if st.button("Cancel", key="synthesize_confirm_cancel"):
+                    st.session_state['synthesize_show_clear_confirm'] = False
+                    st.rerun()
+        confirm()
+    
+    # Clear button at top
+    col_clear, col_spacer = st.columns([1, 10])
+    with col_clear:
+        if st.button("🗑️ Clear All", type="secondary", key="synthesize_clear_btn"):
+            st.session_state['synthesize_show_clear_confirm'] = True
+            st.rerun()
+    
+    st.divider()
     
     # Get templates - first try loading from folder, fall back to config
     templates = load_templates()
@@ -104,7 +147,7 @@ def render_synthesize_mode(config: dict, session: dict) -> None:
         key="synthesize_template"
     )
     
-    if st.button("Generate Synthesized Note", type="primary", key="generate_synthesize_btn"):
+    if st.button("📝 Generate Synthesized Note", type="primary", key="generate_synthesize_btn"):
         instructions = st.session_state.get('synthesize_instructions', '')
         hp = st.session_state.get('synthesize_hp', '')
         consults = st.session_state.get('synthesize_consults', '')

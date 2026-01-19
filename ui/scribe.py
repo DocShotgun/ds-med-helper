@@ -17,13 +17,52 @@ def render_scribe_mode(config: dict, session: dict) -> None:
     st.markdown("Record patient encounters or dictations and generate clinical notes")
     
     # Initialize session state from persistent storage BEFORE creating widgets
-    # This allows Streamlit to use session state as default without conflicting with value parameter
     if 'transcript_edit' not in st.session_state:
         st.session_state['transcript_edit'] = session.get('scribe_transcript', '')
     if 'scribe_note' not in st.session_state:
         st.session_state['scribe_note'] = session.get('scribe_note', '')
     if 'scribe_context_input' not in st.session_state:
         st.session_state['scribe_context_input'] = session.get('scribe_context', '')
+    if 'scribe_audio_bytes' not in st.session_state:
+        st.session_state['scribe_audio_bytes'] = None
+    if 'scribe_show_clear_confirm' not in st.session_state:
+        st.session_state['scribe_show_clear_confirm'] = False
+    
+    # Clear confirmation dialog
+    if st.session_state.get('scribe_show_clear_confirm'):
+        @st.dialog("Clear Scribe Fields?")
+        def confirm():
+            st.warning("Are you sure you want to clear all Scribe fields? This cannot be undone.")
+            col_yes, col_no = st.columns(2)
+            with col_yes:
+                if st.button("Confirm", type="primary", key="scribe_confirm_clear"):
+                    # Clear all scribe fields in session state
+                    st.session_state['transcript_edit'] = ''
+                    st.session_state['scribe_note'] = ''
+                    st.session_state['scribe_context_input'] = ''
+                    st.session_state['scribe_audio_bytes'] = None
+                    # Clear in persistent storage
+                    update_session(session['id'], {
+                        'scribe_transcript': '',
+                        'scribe_note': '',
+                        'scribe_context': ''
+                    })
+                    st.session_state['scribe_show_clear_confirm'] = False
+                    st.rerun()
+            with col_no:
+                if st.button("Cancel", key="scribe_confirm_cancel"):
+                    st.session_state['scribe_show_clear_confirm'] = False
+                    st.rerun()
+        confirm()
+    
+    # Clear button at top
+    col_clear, col_spacer = st.columns([1, 10])
+    with col_clear:
+        if st.button("🗑️ Clear All", type="secondary", key="scribe_clear_btn"):
+            st.session_state['scribe_show_clear_confirm'] = True
+            st.rerun()
+    
+    st.divider()
     
     # Get templates - first try loading from folder, fall back to config
     templates = load_templates()
@@ -35,58 +74,69 @@ def render_scribe_mode(config: dict, session: dict) -> None:
     # Audio recording / upload
     st.subheader("🎙️ Recording")
     
-    col_record, col_upload = st.columns(2)
+    # Check if we have saved audio
+    saved_audio = st.session_state.get('scribe_audio_bytes')
     
-    with col_record:
-        audio_input = st.audio_input("Record patient encounter or dictation", key="audio_input_scribe")
-    
-    with col_upload:
-        uploaded_file = st.file_uploader("Upload audio file", type=['wav', 'mp3', 'm4a', 'ogg'], key="audio_upload_scribe")
-    
-    # Use uploaded file if provided, otherwise use recording
-    audio_to_use = uploaded_file if uploaded_file is not None else audio_input
+    if saved_audio is not None:
+        # Display saved audio
+        st.audio(saved_audio)
+        col_download, col_clear_audio = st.columns([1, 5])
+        with col_download:
+            st.download_button(
+                "💾 Download Recording",
+                data=saved_audio,
+                file_name=f"recording_{session['id']}.wav",
+                mime="audio/wav",
+                key="scribe_download_audio"
+            )
+        with col_clear_audio:
+            if st.button("🗑️ Clear Audio", key="scribe_clear_audio"):
+                st.session_state['scribe_audio_bytes'] = None
+                st.rerun()
+    else:
+        # Show recording/upload widgets
+        col_record, col_upload = st.columns(2)
+        
+        with col_record:
+            new_audio = st.audio_input("Record patient encounter or dictation", key="audio_input_scribe")
+            if new_audio is not None:
+                # Store audio bytes in session state
+                audio_bytes = new_audio.read() if hasattr(new_audio, 'read') else new_audio
+                st.session_state['scribe_audio_bytes'] = audio_bytes
+                st.rerun()
+        
+        with col_upload:
+            uploaded_file = st.file_uploader("Upload audio file", type=['wav', 'mp3', 'm4a', 'ogg'], key="audio_upload_scribe")
+            if uploaded_file is not None:
+                # Store audio bytes in session state
+                audio_bytes = uploaded_file.read()
+                st.session_state['scribe_audio_bytes'] = audio_bytes
+                st.rerun()
     
     # Transcribe button and result
     st.subheader("📝 Transcription")
     
-    if audio_to_use is not None:
-        # Get audio bytes for display/download
-        if hasattr(audio_to_use, 'read'):
-            audio_bytes = audio_to_use.read()
-        else:
-            audio_bytes = audio_to_use
-        
-        st.audio(audio_bytes)
-        
-        # Download button for the recording
-        col_download, col_transcribe = st.columns([1, 3])
-        
-        with col_download:
-            st.download_button(
-                "💾 Download Recording",
-                data=audio_bytes,
-                file_name=f"recording_{session['id']}.wav",
-                mime="audio/wav"
-            )
-        
-        with col_transcribe:
-            if st.button("Transcribe Audio", type="primary", key="transcribe_btn"):
-                with st.spinner("Transcribing..."):
-                    config_stt = config.get('stt', {})
-                    transcript_result = run_async(asr_transcribe(
-                        audio_bytes,
-                        config_stt.get('endpoint', ''),
-                        config_stt.get('model', 'google/medasr')
-                    ))
-                    
-                    if transcript_result:
-                        # Update persistent session storage
-                        update_session(session['id'], {
-                            'scribe_transcript': transcript_result
-                        })
-                        # Update session state and rerun
-                        st.session_state['transcript_edit'] = transcript_result
-                        st.rerun()
+    audio_bytes = st.session_state.get('scribe_audio_bytes')
+    
+    if audio_bytes is not None:
+        # Audio is already displayed above under Recording section
+        if st.button("📝 Transcribe Audio", type="primary", key="transcribe_btn"):
+            with st.spinner("Transcribing..."):
+                config_stt = config.get('stt', {})
+                transcript_result = run_async(asr_transcribe(
+                    audio_bytes,
+                    config_stt.get('endpoint', ''),
+                    config_stt.get('model', 'google/medasr')
+                ))
+                
+                if transcript_result:
+                    # Update persistent session storage
+                    update_session(session['id'], {
+                        'scribe_transcript': transcript_result
+                    })
+                    # Update session state and rerun
+                    st.session_state['transcript_edit'] = transcript_result
+                    st.rerun()
     else:
         st.info("Record audio or upload a file to begin")
     
@@ -127,7 +177,7 @@ def render_scribe_mode(config: dict, session: dict) -> None:
         on_change=lambda: update_session(session['id'], {'scribe_template': selected_template_name})
     )
     
-    if st.button("Generate Note", type="primary", key="generate_note_btn"):
+    if st.button("📝 Generate Note", type="primary", key="generate_note_btn"):
         if transcript.strip():
             config_llm = config.get('llm', {})
             template = template_options[selected_template_name]

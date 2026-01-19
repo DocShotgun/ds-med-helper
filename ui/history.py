@@ -17,7 +17,7 @@ def render_delete_confirmation(session_id: str):
         st.warning(f"Are you sure you want to delete session {session_id}? This cannot be undone.")
         col_yes, col_no = st.columns(2)
         with col_yes:
-            if st.button("Delete", type="primary"):
+            if st.button("Confirm", type="primary"):
                 delete_session(session_id)
                 if st.session_state.get('selected_session_id') == session_id:
                     st.session_state.pop('selected_session_id', None)
@@ -39,7 +39,7 @@ def render_clear_all_confirmation():
         st.warning(f"Are you sure you want to delete all {len(sessions)} sessions? This cannot be undone.")
         col_yes, col_no = st.columns(2)
         with col_yes:
-            if st.button("Clear All", type="primary"):
+            if st.button("Confirm", type="primary"):
                 for session in sessions:
                     delete_session(session['id'])
                 new_session = create_session()
@@ -67,7 +67,7 @@ def render_session_history() -> None:
     col1, col2 = st.columns(2)
     
     with col1:
-        if st.button("Create New Session", type="primary"):
+        if st.button("📚 Create New Session", type="primary"):
             new_session = create_session()
             st.session_state['selected_session_id'] = new_session['id']
             st.query_params['session_id'] = new_session['id']
@@ -75,7 +75,7 @@ def render_session_history() -> None:
             st.rerun()
     
     with col2:
-        if st.button("Clear All Sessions", type="primary"):
+        if st.button("🗑️ Clear All Sessions", type="secondary"):
             render_clear_all_confirmation()
     
     st.divider()
@@ -95,13 +95,13 @@ def render_session_history() -> None:
             col1, col2 = st.columns(2)
             
             with col1:
-                if st.button(f"Switch to Session {session['id']}", key=f"load_{session['id']}"):
+                if st.button(f"🔄 Switch to Session {session['id']}", key=f"load_{session['id']}", type="primary"):
                     st.session_state['selected_session_id'] = session['id']
                     st.query_params['session_id'] = session['id']
                     st.success(f"Switched to session {session['id']}")
                     st.rerun()
             
             with col2:
-                if st.button(f"Delete Session {session['id']}", key=f"delete_{session['id']}", type="primary"):
+                if st.button(f"🗑️ Delete Session {session['id']}", key=f"delete_{session['id']}", type="secondary"):
                     st.session_state['confirm_delete_session_id'] = session['id']
                     st.rerun()

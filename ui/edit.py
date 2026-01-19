@@ -17,13 +17,49 @@ def render_edit_mode(config: dict, session: dict) -> None:
     st.markdown("Edit physician notes with AI assistance")
     
     # Initialize session state from persistent storage BEFORE creating widgets
-    # This allows Streamlit to use session state as default without conflicting with value parameter
     if 'original_note_area' not in st.session_state:
         st.session_state['original_note_area'] = session.get('edit_original', '')
     if 'edit_instr' not in st.session_state:
         st.session_state['edit_instr'] = session.get('edit_instructions', '')
     if 'edit_result' not in st.session_state:
         st.session_state['edit_result'] = session.get('edit_result', '')
+    if 'edit_show_clear_confirm' not in st.session_state:
+        st.session_state['edit_show_clear_confirm'] = False
+    
+    # Clear confirmation dialog
+    if st.session_state.get('edit_show_clear_confirm'):
+        @st.dialog("Clear Edit Fields?")
+        def confirm():
+            st.warning("Are you sure you want to clear all Edit fields? This cannot be undone.")
+            col_yes, col_no = st.columns(2)
+            with col_yes:
+                if st.button("Confirm", type="primary", key="edit_confirm_clear"):
+                    # Clear all edit fields in session state
+                    st.session_state['original_note_area'] = ''
+                    st.session_state['edit_instr'] = ''
+                    st.session_state['edit_result'] = ''
+                    # Clear in persistent storage
+                    update_session(session['id'], {
+                        'edit_original': '',
+                        'edit_instructions': '',
+                        'edit_result': ''
+                    })
+                    st.session_state['edit_show_clear_confirm'] = False
+                    st.rerun()
+            with col_no:
+                if st.button("Cancel", key="edit_confirm_cancel"):
+                    st.session_state['edit_show_clear_confirm'] = False
+                    st.rerun()
+        confirm()
+    
+    # Clear button at top
+    col_clear, col_spacer = st.columns([1, 10])
+    with col_clear:
+        if st.button("🗑️ Clear All", type="secondary", key="edit_clear_btn"):
+            st.session_state['edit_show_clear_confirm'] = True
+            st.rerun()
+    
+    st.divider()
     
     # Get templates - first try loading from folder, fall back to config
     templates = load_templates()
@@ -71,7 +107,7 @@ def render_edit_mode(config: dict, session: dict) -> None:
             key="edit_template"
         )
         
-        if st.button("Generate Edited Note", type="primary", key="generate_edit_btn"):
+        if st.button("📝 Generate Edited Note", type="primary", key="generate_edit_btn"):
             current_note = st.session_state.get('original_note_area', '')
             current_instr = st.session_state.get('edit_instr', '')
             

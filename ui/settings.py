@@ -9,6 +9,8 @@ def render_settings(config: dict) -> None:
     """Render settings page"""
     st.header("⚙️ Settings")
     st.markdown("Configure app settings and endpoints")
+
+    st.divider()
     
     with st.expander("Server Configuration", expanded=True):
         server_config = config.get('server', {})
