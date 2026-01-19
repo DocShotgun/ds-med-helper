@@ -1,0 +1,29 @@
+Internal Medicine Progress Note
+
+Interval History:
+[...]
+
+Physical Exam:
+General: No acute distress. A&O x3
+Head: Normocephalic, atraumatic.
+Eyes: No scleral icterus. No conjunctivitis
+ENT: Moist oropharynx. Dentition intact. Trachea midline.
+Cardiovascular: S1S2, RRR. No m/r/g. No JVD
+Respiratory/Chest: CTA b/l. No r/w/r.
+Abdomen: +BS, soft, non-tender
+Extremity: No peripheral edema.
+Skin: Intact. No rash.
+Neurologic: No gross neuro deficit
+
+Lab/Imaging Results:
+[copy verbatim from source notes if present]
+
+Assessment/Plan:
+
+# [...]
+- [...]
+
+# [...]
+- [...]
+
+<list acute inpatient conditions first, followed by chronic conditions>
