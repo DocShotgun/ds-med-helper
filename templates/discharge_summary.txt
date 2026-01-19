@@ -4,10 +4,9 @@ Admission Date: [...]
 Discharge Date: [...]
 
 DISCHARGED DIAGNOSES:
-# [...]
-# [...]
-
 <list acute inpatient conditions first, followed by chronic conditions>
+# [...]
+# [...]
 
 HOSPITAL SUMMARY COURSE:
 [age] year old [sex] with [PMH/PSH] presenting with [...]
@@ -22,6 +21,7 @@ CONSULTING PHYSICIANS:
 [...]
 
 PHYSICAL EXAM ON DISCHARGE:
+<update this baseline exam using information from the final progress note if available>
 General: No acute distress. A&O x3
 Head: Normocephalic, atraumatic.
 Eyes: No scleral icterus. No conjunctivitis

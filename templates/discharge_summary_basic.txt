@@ -4,16 +4,14 @@ Admission Date: [...]
 Discharge Date: [...]
 
 ADMITTING DIAGNOSES:
+<list acute inpatient conditions first, followed by chronic conditions; include only problems/diagnoses present on admission>
 # [...]
 # [...]
-
-<list acute inpatient conditions first, followed by chronic conditions>
 
 DISCHARGED DIAGNOSES:
-# [...]
-# [...]
-
 <list acute inpatient conditions first, followed by chronic conditions>
+# [...]
+# [...]
 
 HOSPITAL SUMMARY COURSE:
 [age] year old [sex] with [PMH/PSH] presenting with [...]
@@ -24,6 +22,7 @@ CONSULTING PHYSICIANS:
 [...]
 
 PHYSICAL EXAM ON DISCHARGE:
+<update this baseline exam using information from the final progress note if available>
 General: No acute distress. A&O x3
 Head: Normocephalic, atraumatic.
 Eyes: No scleral icterus. No conjunctivitis
@@ -36,4 +35,4 @@ Skin: Intact. No rash.
 Neurologic: No gross neuro deficit
 
 PERTINENT IMAGING / LABS:
-[copy verbatim from source notes if present]
+<copy verbatim from source notes if present>

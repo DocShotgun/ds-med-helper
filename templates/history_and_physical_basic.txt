@@ -40,11 +40,9 @@ Lab/Imaging Results:
 [...]
 
 Assessment/Plan:
-
+<list acute inpatient conditions first, followed by chronic conditions>
 # [...]
 - [...]
 
 # [...]
-- [...]
-
-<list acute inpatient conditions first, followed by chronic conditions>​
+- [...]​
