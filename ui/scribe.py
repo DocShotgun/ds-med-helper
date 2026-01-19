@@ -178,12 +178,13 @@ def render_scribe_mode(config: dict, session: dict) -> None:
         on_change=lambda: update_session(session['id'], {'scribe_template': selected_template_name})
     )
     
-    if st.button("Generate Note", type="primary", key="generate_note_btn", icon="📝"):
-        if transcript.strip():
+    #has_transcript = bool(st.session_state.get('transcript_edit', '').strip())
+    if st.button("Generate Note", type="primary", key="generate_note_btn", icon="📝", disabled=not transcript):
+        if transcript:
             config_llm = config.get('llm', {})
             template = template_options[selected_template_name]
             
-            prompt = format_note_writing_prompt(transcript, template['system_prompt'], context)
+            prompt = format_note_writing_prompt(transcript.strip(), template['system_prompt'], context.strip())
             
             with st.spinner("Generating clinical note..."):
                 chunks = run_async(llm_stream_to_list(
@@ -207,8 +208,6 @@ def render_scribe_mode(config: dict, session: dict) -> None:
                     st.session_state['scribe_note'] = note_output
                     st.success("Note generated!")
                     st.rerun()
-        else:
-            st.warning("Please provide a transcription first")
     
     # Show generated note
     generated_note = st.session_state.get('scribe_note') or session.get('scribe_note', '')

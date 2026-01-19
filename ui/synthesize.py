@@ -88,7 +88,7 @@ def render_synthesize_mode(config: dict, session: dict) -> None:
         def save_instructions():
             update_session(session['id'], {'synthesize_instructions': st.session_state.synthesize_instructions})
         
-        st.text_area(
+        instructions = st.text_area(
             "Synthesize Instructions",
             height=80,
             key="synthesize_instructions",
@@ -99,7 +99,7 @@ def render_synthesize_mode(config: dict, session: dict) -> None:
         def save_hp():
             update_session(session['id'], {'synthesize_hp': st.session_state.synthesize_hp})
         
-        st.text_area(
+        hp = st.text_area(
             "History and Physical",
             height=150,
             key="synthesize_hp",
@@ -109,7 +109,7 @@ def render_synthesize_mode(config: dict, session: dict) -> None:
         def save_consults():
             update_session(session['id'], {'synthesize_consults': st.session_state.synthesize_consults})
         
-        st.text_area(
+        consults = st.text_area(
             "Consult Note(s)",
             height=150,
             key="synthesize_consults",
@@ -120,7 +120,7 @@ def render_synthesize_mode(config: dict, session: dict) -> None:
         def save_studies():
             update_session(session['id'], {'synthesize_studies': st.session_state.synthesize_studies})
         
-        st.text_area(
+        studies = st.text_area(
             "Studies and Procedures",
             height=150,
             key="synthesize_studies",
@@ -130,7 +130,7 @@ def render_synthesize_mode(config: dict, session: dict) -> None:
         def save_progress():
             update_session(session['id'], {'synthesize_progress': st.session_state.synthesize_progress})
         
-        st.text_area(
+        progress = st.text_area(
             "Progress Note(s)",
             height=150,
             key="synthesize_progress",
@@ -147,25 +147,20 @@ def render_synthesize_mode(config: dict, session: dict) -> None:
         key="synthesize_template"
     )
     
-    if st.button("Generate Synthesized Note", type="primary", key="generate_synthesize_btn", icon="📝"):
-        instructions = st.session_state.get('synthesize_instructions', '')
-        hp = st.session_state.get('synthesize_hp', '')
-        consults = st.session_state.get('synthesize_consults', '')
-        studies = st.session_state.get('synthesize_studies', '')
-        progress = st.session_state.get('synthesize_progress', '')
-        
-        # Check if at least one input field has content
-        if any([hp, consults, studies, progress]):
+    has_content = any([hp, consults, studies, progress])
+    can_synthesize = instructions and has_content
+    if st.button("Generate Synthesized Note", type="primary", key="generate_synthesize_btn", icon="📝", disabled=not can_synthesize):
+        if can_synthesize:
             config_llm = config.get('llm', {})
             template = template_options[selected_template_name]
             
             prompt = format_note_synthesis_prompt(
-                instructions=instructions,
+                instructions=instructions.strip(),
                 template_prompt=template['system_prompt'],
-                hp=hp,
-                consults=consults,
-                studies=studies,
-                progress=progress
+                hp=hp.strip(),
+                consults=consults.strip(),
+                studies=studies.strip(),
+                progress=progress.strip()
             )
             
             with st.spinner("Synthesizing clinical note..."):
@@ -190,8 +185,6 @@ def render_synthesize_mode(config: dict, session: dict) -> None:
                     st.session_state['synthesize_result'] = note_output
                     st.success("Note synthesized!")
                     st.rerun()
-        else:
-            st.warning("Please provide at least one source of information")
     
     # Show synthesized note
     if st.session_state.get('synthesize_result'):

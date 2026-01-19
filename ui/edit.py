@@ -107,15 +107,13 @@ def render_edit_mode(config: dict, session: dict) -> None:
             key="edit_template"
         )
         
-        if st.button("Generate Edited Note", type="primary", key="generate_edit_btn", icon="📝"):
-            current_note = st.session_state.get('original_note_area', '')
-            current_instr = st.session_state.get('edit_instr', '')
-            
-            if current_note.strip():
+        can_edit = original_note and instructions
+        if st.button("Generate Edited Note", type="primary", key="generate_edit_btn", icon="📝", disabled=not can_edit):
+            if can_edit:
                 config_llm = config.get('llm', {})
                 template = template_options[selected_template_name]
                 
-                prompt = format_note_edit_prompt(current_note, current_instr, template['system_prompt'])
+                prompt = format_note_edit_prompt(original_note.strip(), instructions.strip(), template['system_prompt'])
                 
                 with st.spinner("Editing note..."):
                     chunks = run_async(llm_stream_to_list(
@@ -138,8 +136,6 @@ def render_edit_mode(config: dict, session: dict) -> None:
                         })
                         st.session_state['edit_result'] = edited_output
                         st.success("Edit complete!")
-            else:
-                st.warning("Please enter an original note first")
     
     # Show edited note if it exists in session state
     if st.session_state.get('edit_result'):
