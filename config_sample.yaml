@@ -1,5 +1,6 @@
 llm:
   endpoint: http://localhost:8080
+  api_key: ''
   max_tokens: -1
   min_p: 0.05
   model: google/medgemma-27b-text-it
@@ -33,4 +34,5 @@ session:
   storage_file: sessions/session_data.json
 stt:
   endpoint: http://localhost:8000
+  api_key: ''
   model: google/medasr

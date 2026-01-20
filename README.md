@@ -42,6 +42,7 @@ server:
 
 llm:
   endpoint: "http://localhost:8080"
+  api_key: ""  # Optional: Bearer token for authenticated endpoints
   model: "google/medgemma-27b-text-it"
   system_prompt: "You are a medical documentation assistant..."
   max_tokens: -1         # -1 for unlimited
@@ -52,6 +53,7 @@ llm:
 
 stt:
   endpoint: "http://localhost:8000"
+  api_key: ""  # Optional: Bearer token for authenticated endpoints
   model: "google/medasr"
 
 session:

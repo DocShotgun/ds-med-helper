@@ -39,6 +39,7 @@ async def llm_stream_to_list(
     system_prompt: str,
     endpoint: str,
     model: str,
+    api_key: str = '',
     max_tokens: int = -1,
     temperature: float = 0.8,
     top_k: int = 40,
@@ -58,6 +59,7 @@ async def llm_stream_to_list(
         system_prompt: System instruction
         endpoint: Base LLM endpoint URL (e.g., http://localhost:8080)
         model: Model name
+        api_key: Bearer token for authentication (optional)
         max_tokens: Max tokens to generate (-1 for unlimited)
         temperature: Sampling temperature
         top_k: Top-k sampling parameter
@@ -86,10 +88,16 @@ async def llm_stream_to_list(
             "stream": True
         }
         
+        # Build headers with authorization if API key provided
+        headers = {}
+        if api_key:
+            headers['Authorization'] = f'Bearer {api_key}'
+        
         async with aiohttp.ClientSession() as session:
             async with session.post(
                 full_endpoint,
                 json=payload,
+                headers=headers,
                 timeout=aiohttp.ClientTimeout(total=300)
             ) as resp:
                 if resp.status == 200:

@@ -127,7 +127,8 @@ def render_scribe_mode(config: dict, session: dict) -> None:
                 transcript_result = run_async(asr_transcribe(
                     audio_bytes,
                     config_stt.get('endpoint', ''),
-                    config_stt.get('model', 'google/medasr')
+                    config_stt.get('model', 'google/medasr'),
+                    config_stt.get('api_key', '')
                 ))
                 
                 if transcript_result:
@@ -192,6 +193,7 @@ def render_scribe_mode(config: dict, session: dict) -> None:
                     system_prompt=config_llm.get('system_prompt', ''),
                     endpoint=config_llm.get('endpoint', ''),
                     model=config_llm.get('model', ''),
+                    api_key=config_llm.get('api_key', ''),
                     max_tokens=config_llm.get('max_tokens', -1),
                     temperature=config_llm.get('temperature', 0.8),
                     top_k=config_llm.get('top_k', 40),

@@ -22,6 +22,7 @@ def init_settings_session(config: dict) -> None:
         st.session_state['settings_host'] = server_config.get('host', '0.0.0.0')
         st.session_state['settings_port'] = server_config.get('port', 8501)
         st.session_state['settings_llm_endpoint'] = llm_config.get('endpoint', 'http://localhost:8080')
+        st.session_state['settings_llm_api_key'] = llm_config.get('api_key', '')
         st.session_state['settings_model'] = llm_config.get('model', 'google/medgemma-27b-text-it')
         st.session_state['settings_system_prompt'] = llm_config.get('system_prompt', '')
         st.session_state['settings_max_tokens'] = llm_config.get('max_tokens', -1)
@@ -30,6 +31,7 @@ def init_settings_session(config: dict) -> None:
         st.session_state['settings_top_p'] = llm_config.get('top_p', 0.95)
         st.session_state['settings_min_p'] = llm_config.get('min_p', 0.05)
         st.session_state['settings_stt_endpoint'] = stt_config.get('endpoint', 'http://localhost:8000')
+        st.session_state['settings_stt_api_key'] = stt_config.get('api_key', '')
         st.session_state['settings_stt_model'] = stt_config.get('model', 'google/medasr')
 
 
@@ -62,6 +64,7 @@ def render_settings(config: dict) -> None:
     # LLM Configuration
     with st.expander("LLM Configuration", expanded=True):
         st.text_input("LLM Endpoint", key="settings_llm_endpoint", help="Base URL for llama.cpp server")
+        st.text_input("API Key", key="settings_llm_api_key", type="password", help="Bearer token for authenticated endpoints")
         st.text_input("Model Name", key="settings_model")
         st.text_area("System Prompt", key="settings_system_prompt", height=150, help="Instructions for the LLM")
         st.number_input("Max Tokens", key="settings_max_tokens", min_value=-1)
@@ -80,6 +83,7 @@ def render_settings(config: dict) -> None:
     # STT Configuration
     with st.expander("STT Configuration", expanded=True):
         st.text_input("STT Endpoint", key="settings_stt_endpoint", help="Base URL for ASR server")
+        st.text_input("API Key", key="settings_stt_api_key", type="password", help="Bearer token for authenticated endpoints")
         st.text_input("STT Model", key="settings_stt_model", help="ASR model name")
 
 
@@ -95,6 +99,7 @@ def save_settings_from_session():
     }
     config['llm'] = {
         'endpoint': st.session_state.get('settings_llm_endpoint', 'http://localhost:8080'),
+        'api_key': st.session_state.get('settings_llm_api_key', ''),
         'model': st.session_state.get('settings_model', 'google/medgemma-27b-text-it'),
         'system_prompt': st.session_state.get('settings_system_prompt', ''),
         'max_tokens': int(st.session_state.get('settings_max_tokens', -1)) if st.session_state.get('settings_max_tokens', -1) > 0 else -1,
@@ -105,6 +110,7 @@ def save_settings_from_session():
     }
     config['stt'] = {
         'endpoint': st.session_state.get('settings_stt_endpoint', 'http://localhost:8000'),
+        'api_key': st.session_state.get('settings_stt_api_key', ''),
         'model': st.session_state.get('settings_stt_model', 'google/medasr')
     }
     
