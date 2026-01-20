@@ -34,7 +34,7 @@ def run_async(coro):
         return asyncio.run(coro)
 
 
-async def llm_stream_to_list(
+async def llm_streaming_chat_completion(
     prompt: str,
     system_prompt: str,
     endpoint: str,
@@ -47,7 +47,7 @@ async def llm_stream_to_list(
     min_p: float = 0.05
 ) -> list:
     """
-    Generic LLM streaming completion - collects all chunks into a list.
+    Generic LLM streaming chat completion - collects all chunks into a list.
     
     Per OpenAI API spec (POST /chat/completions with stream=True):
     - Set stream=True in request body

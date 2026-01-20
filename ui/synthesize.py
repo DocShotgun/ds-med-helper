@@ -2,7 +2,7 @@
 
 import streamlit as st
 
-from api import llm_stream_to_list, format_note_synthesis_prompt, run_async
+from api import llm_streaming_chat_completion, format_note_synthesis_prompt, run_async
 from core import load_templates, get_fallback_templates, update_session
 
 
@@ -164,7 +164,7 @@ def render_synthesize_mode(config: dict, session: dict) -> None:
             )
             
             with st.spinner("Synthesizing clinical note..."):
-                chunks = run_async(llm_stream_to_list(
+                chunks = run_async(llm_streaming_chat_completion(
                     prompt=prompt,
                     system_prompt=config_llm.get('system_prompt', ''),
                     endpoint=config_llm.get('endpoint', ''),

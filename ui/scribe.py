@@ -2,7 +2,7 @@
 
 import streamlit as st
 
-from api import asr_transcribe, llm_stream_to_list, format_note_writing_prompt, run_async
+from api import asr_transcribe, llm_streaming_chat_completion, format_note_writing_prompt, run_async
 from core import load_templates, get_fallback_templates, update_session
 
 
@@ -188,7 +188,7 @@ def render_scribe_mode(config: dict, session: dict) -> None:
             prompt = format_note_writing_prompt(transcript.strip(), template['system_prompt'], context.strip())
             
             with st.spinner("Generating clinical note..."):
-                chunks = run_async(llm_stream_to_list(
+                chunks = run_async(llm_streaming_chat_completion(
                     prompt=prompt,
                     system_prompt=config_llm.get('system_prompt', ''),
                     endpoint=config_llm.get('endpoint', ''),
