@@ -9,7 +9,7 @@ Features:
 """
 
 from core import load_config
-from ui import render_scribe_mode, render_edit_mode, render_synthesize_mode, render_settings, render_session_history, render_session_picker
+from ui import render_scribe_mode, render_edit_mode, render_synthesize_mode, render_settings, render_session_manager, render_session_picker
 
 
 def main():
@@ -32,7 +32,7 @@ def main():
     session = render_session_picker()
     
     # Navigation tabs (sticky)
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(["📝 Scribe", "✏️ Edit", "📋 Synthesize", "📚 History", "⚙️ Settings"])
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(["📝 Scribe", "✏️ Edit", "📋 Synthesize", "📚 Sessions", "⚙️ Settings"])
     
     with tab1:
         render_scribe_mode(config, session)
@@ -44,7 +44,7 @@ def main():
         render_synthesize_mode(config, session)
     
     with tab4:
-        render_session_history()
+        render_session_manager()
     
     with tab5:
         render_settings(config)

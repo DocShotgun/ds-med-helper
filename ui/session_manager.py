@@ -1,4 +1,4 @@
-"""Session History UI Component"""
+"""Session Manager UI Component"""
 
 import streamlit as st
 
@@ -54,10 +54,10 @@ def render_clear_all_confirmation():
     confirm()
 
 
-def render_session_history() -> None:
-    """Render session history viewer"""
-    st.header("📚 Session History")
-    st.markdown("Manage sessions and view history")
+def render_session_manager() -> None:
+    """Render session manager"""
+    st.header("📚 Session Manager")
+    st.markdown("Create and manage sessions")
     
     # Check if we need to show confirmation dialogs
     if st.session_state.get('confirm_delete_session_id'):
