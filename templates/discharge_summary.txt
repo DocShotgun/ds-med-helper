@@ -11,6 +11,8 @@ DISCHARGED DIAGNOSES:
 HOSPITAL SUMMARY COURSE:
 [age] year old [sex] with [PMH/PSH] presenting with [...]
 
+<keep hospital course concise, focus on presenting complaint, acute diagnoses found, and specific treatment/procedures rendered>
+
 Patient was deemed medically stable for discharge to [disposition] to continue outpatient follow-up as scheduled.
 
 [X] The patient was admitted due to a significant illness that required immediate inpatient care to protect life, prevent serious disability, or avoid death. The patient's condition was severe and could not be safely managed outside of a hospital setting. Admission was necessary to provide the level of care needed to stabilize the patient and prevent further deterioration.

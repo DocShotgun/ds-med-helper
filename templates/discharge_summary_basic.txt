@@ -16,6 +16,8 @@ DISCHARGED DIAGNOSES:
 HOSPITAL SUMMARY COURSE:
 [age] year old [sex] with [PMH/PSH] presenting with [...]
 
+<keep hospital course concise, focus on presenting complaint, acute diagnoses found, and specific treatment/procedures rendered>
+
 Patient was deemed medically stable for discharge to [disposition] to continue outpatient follow-up as scheduled.
 
 CONSULTING PHYSICIANS:
