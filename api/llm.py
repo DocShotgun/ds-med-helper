@@ -44,7 +44,8 @@ async def llm_streaming_chat_completion(
     temperature: float = 0.8,
     top_k: int = 40,
     top_p: float = 0.95,
-    min_p: float = 0.05
+    min_p: float = 0.05,
+    extra_api_params: dict | None = None
 ) -> list:
     """
     Generic LLM streaming chat completion - collects all chunks into a list.
@@ -65,6 +66,7 @@ async def llm_streaming_chat_completion(
         top_k: Top-k sampling parameter
         top_p: Top-p sampling parameter
         min_p: Minimum probability sampling parameter
+        extra_api_params: Additional parameters to pass to the API (e.g., {"repeat_penalty": 1.1})
     
     Returns:
         List of text chunks from the stream
@@ -87,6 +89,9 @@ async def llm_streaming_chat_completion(
             "min_p": min_p,
             "stream": True
         }
+        
+        if extra_api_params:
+            payload.update(extra_api_params)
         
         # Build headers with authorization if API key provided
         headers = {}

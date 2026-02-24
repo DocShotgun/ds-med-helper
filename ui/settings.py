@@ -1,5 +1,7 @@
 """Settings UI Component"""
 
+import json
+
 import streamlit as st
 
 from core import save_config
@@ -33,6 +35,9 @@ def init_settings_session(config: dict) -> None:
         st.session_state['settings_stt_endpoint'] = stt_config.get('endpoint', 'http://localhost:8000')
         st.session_state['settings_stt_api_key'] = stt_config.get('api_key', '')
         st.session_state['settings_stt_model'] = stt_config.get('model', 'google/medasr')
+        
+        extra_params = llm_config.get('extra_api_params', {})
+        st.session_state['settings_extra_api_params'] = json.dumps(extra_params) if extra_params else ''
 
 
 def render_settings(config: dict) -> None:
@@ -79,6 +84,13 @@ def render_settings(config: dict) -> None:
             st.slider("Top P", 0.0, 1.0, key="settings_top_p")
         with c4:
             st.slider("Min P", 0.0, 1.0, key="settings_min_p")
+        
+        st.text_area(
+            "Extra API Parameters (JSON)",
+            key="settings_extra_api_params",
+            height=100,
+            help='Additional parameters to pass to API (e.g., {"repeat_penalty": 1.1})'
+        )
     
     # STT Configuration
     with st.expander("STT Configuration", expanded=True):
@@ -108,6 +120,21 @@ def save_settings_from_session():
         'top_p': st.session_state.get('settings_top_p', 0.95),
         'min_p': st.session_state.get('settings_min_p', 0.05),
     }
+    
+    extra_params_str = st.session_state.get('settings_extra_api_params', '').strip()
+    if extra_params_str:
+        try:
+            extra_params = json.loads(extra_params_str)
+            if isinstance(extra_params, dict):
+                config['llm']['extra_api_params'] = extra_params
+            else:
+                st.error("Extra API Parameters must be a JSON object (e.g., {\"key\": \"value\"})")
+                return
+        except json.JSONDecodeError as e:
+            st.error(f"Invalid JSON in Extra API Parameters: {e}")
+            return
+    else:
+        config['llm']['extra_api_params'] = {}
     config['stt'] = {
         'endpoint': st.session_state.get('settings_stt_endpoint', 'http://localhost:8000'),
         'api_key': st.session_state.get('settings_stt_api_key', ''),

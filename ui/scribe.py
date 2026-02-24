@@ -198,7 +198,8 @@ def render_scribe_mode(config: dict, session: dict) -> None:
                     temperature=config_llm.get('temperature', 0.8),
                     top_k=config_llm.get('top_k', 40),
                     top_p=config_llm.get('top_p', 0.95),
-                    min_p=config_llm.get('min_p', 0.05)
+                    min_p=config_llm.get('min_p', 0.05),
+                    extra_api_params=config_llm.get('extra_api_params')
                 ))
                 
                 note_output = "".join(chunks)
