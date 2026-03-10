@@ -38,3 +38,8 @@ Neurologic: No gross neuro deficit
 
 PERTINENT IMAGING / LABS:
 <copy verbatim from source notes if present>
+
+OUTPATIENT PROVIDER TO-DO LIST:
+- Items to follow up on
+- Pending consults
+- Pending tests
