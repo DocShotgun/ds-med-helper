@@ -16,7 +16,7 @@ DISCHARGED DIAGNOSES:
 HOSPITAL SUMMARY COURSE:
 [age] year old [sex] with [PMH/PSH] presenting with [...]
 
-<keep hospital course concise, focus on presenting complaint, acute diagnoses found, and specific treatment/procedures rendered>
+<keep hospital course concise, focus on presenting complaint, acute diagnoses found, and specific treatment/procedures rendered; for the sake of brevity, do not include specific laboratory or vitals values in the hospital course>
 
 Patient was deemed medically stable for discharge to [disposition] to continue outpatient follow-up as scheduled.
 
